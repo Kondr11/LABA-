@@ -57,8 +57,10 @@ target_include_directories(Cli
 )
 
 target_link_libraries(tests header GTest::main)
+target_link_libraries(tests Cli GTest::main)
 target_link_libraries(Cli header)
 target_link_libraries(main header)
+target_link_libraries(main Cli)
 
 enable_testing()
 add_test(NAME unit_tests COMMAND tests)
