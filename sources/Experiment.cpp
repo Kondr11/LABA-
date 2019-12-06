@@ -1,3 +1,4 @@
+// Copyright 2019 <Kondr11>
 #include "HardwareData.h"
 //#include "Experiment.h"
 #include "Cli.h"
@@ -8,10 +9,11 @@
 
 using BufferType = ExperimentInitData::BufferType;
 
-Experiment Experiment::doExperiment(size_t bufferSize, Investigation::Direction direction)
+Experiment Experiment::doExperiment(size_t bufferSize, 
+                   Investigation::Direction direction)
 {
     std::cout << "Experiment. Size (KiB): " << bufferSize
-              << ". Size (array size): " << kibToSize(bufferSize) << std::endl;
+             << ". Size (array size): " << kibToSize(bufferSize) << std::endl;
     bufferSize = kibToSize(bufferSize);
 
     // Инициализация
@@ -42,31 +44,36 @@ Experiment Experiment::doExperiment(size_t bufferSize, Investigation::Direction 
     return {
             sizeToKib(bufferSize),
             static_cast<size_t>(
-                    std::chrono::duration_cast<std::chrono::milliseconds>(stopTime - startTime).count()
-            ),
+            std::chrono::duration_cast<std::chrono::
+            milliseconds>(stopTime - startTime).count()),
     };
 }
 
-void Experiment::runForward(const Experiment::BufferPtr &buffer, std::vector<size_t> &indexes)
+void Experiment::runForward(const Experiment::BufferPtr &buffer,
+                           std::vector<size_t> &indexes)
 {
     return run(buffer, indexes);
 }
 
-void Experiment::runBackward(const Experiment::BufferPtr &buffer, std::vector<size_t> &indexes)
+void Experiment::runBackward(const Experiment::BufferPtr &buffer,
+                            std::vector<size_t> &indexes)
 {
     std::reverse(indexes.begin(), indexes.end());
 
     return run(buffer, indexes);
 }
 
-void Experiment::runRandom(const Experiment::BufferPtr &buffer, std::vector<size_t> &indexes)
+void Experiment::runRandom(const Experiment::BufferPtr &buffer,
+                          std::vector<size_t> &indexes)
 {
-    std::shuffle(indexes.begin(), indexes.end(), std::mt19937{std::random_device{}()});
+    std::shuffle(indexes.begin(), indexes.end(),
+    std::mt19937{std::random_device{}()});
 
     return run(buffer, indexes);
 }
 
-void Experiment::run(const BufferPtr &buffer, const std::vector<size_t> &indexes)
+void Experiment::run(const BufferPtr &buffer, 
+          const std::vector<size_t> &indexes)
 {
     size_t value = 0;
 
@@ -100,16 +107,17 @@ size_t Experiment::sizeToKib(size_t size)
     return size * sizeof(size_t) / 1024;
 }
 
-Investigation Investigation::doInvestigation(Direction direction, const BufferType &bufferSizes)
+Investigation Investigation::doInvestigation(Direction direction, 
+                                   const BufferType &bufferSizes)
 {
-    std::cout << "Investigation. Direction: " << Cli::directionToString(direction) << std::endl;
+    std::cout << "Investigation. Direction: " << 
+    Cli::directionToString(direction) << std::endl;
 
     std::vector<Experiment> experiments;
 
-    for (size_t size: bufferSizes) {
+    for (size_t size : bufferSizes) {
         experiments.emplace_back(
-                Experiment::doExperiment(size, direction)
-        );
+                Experiment::doExperiment(size, direction));
     }
 
     return {
@@ -133,7 +141,8 @@ Investigation Investigation::doInvestigation(Direction direction, const BufferTy
 
 
 
-ExperimentInitData ExperimentInitData::getExperimentData(const HardwareData &hardware)
+ExperimentInitData ExperimentInitData::getExperimentData
+                          (const HardwareData &hardware)
 {
     size_t startValue = hardware.cacheMemoryKB.front() / 2;
     size_t stopValue = hardware.cacheMemoryKB.back() * 3 / 2;

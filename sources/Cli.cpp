@@ -1,3 +1,4 @@
+// Copyright 2019 <Kondr11>
 #include "Cli.h"
 
 namespace Cli
@@ -19,7 +20,7 @@ namespace Cli
     {
         std::string result;
 
-        for (const Investigation &investigation: data.investigations) {
+        for (const Investigation &investigation : data.investigations) {
             result += "- investigation:\n  travel_variant: \"";
             result += directionToString(investigation.direction) + "\"\n";
             result += "  experiments:\n";
@@ -32,7 +33,8 @@ namespace Cli
                           + "\n      input_data:\n        buffer_size: \""
                           + std::to_string(experiment.bufferSize)
                           + " KiB\"\n      results:\n        duration: \""
-                          + std::to_string(experiment.duration) + " milliseconds\"\n";
+                          + std::to_string(experiment.duration)
+                          + " milliseconds\"\n";
             }
             result += "\n";
         }
@@ -59,10 +61,10 @@ namespace Cli
 
         for (size_t i = 0; i < data.investigations.size(); i++) {
             columnNames.push_back(
-                    directionToString(data.investigations[i].direction)
-            );
+                    directionToString(data.investigations[i].direction));
 
-            for (size_t e = 0; e < data.investigations[i].experiments.size(); e++) {
+            for (size_t e = 0; e < data.investigations[i].experiments.size(); 
+                e++) {
                 const auto &experiment = data.investigations[i].experiments[e];
 
                 if (i == 0) {
@@ -127,4 +129,4 @@ namespace Cli
         return result;
     }
 
-}
+}// namespace Cli
