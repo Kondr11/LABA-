@@ -63,7 +63,7 @@ namespace Cli
             columnNames.push_back(
                     directionToString(data.investigations[i].direction));
 
-            for (size_t e = 0; e < data.investigations[i].experiments.size(); 
+            for (size_t e = 0; e < data.investigations[i].experiments.size();
                 e++) {
                 const auto &experiment = data.investigations[i].experiments[e];
 

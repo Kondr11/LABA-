@@ -39,7 +39,7 @@ add_executable(Cli
 )
 
 
-add_executable(tests
+add_executable(test
   ${CMAKE_CURRENT_SOURCE_DIR}/tests/test.cpp
 )
 
@@ -49,6 +49,9 @@ target_include_directories(tests
   PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
+target_include_directories(header 
+  PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
 
 target_link_libraries(tests header GTest::main)
 target_link_libraries(main header)
@@ -61,7 +64,6 @@ if (BUILD_COVERAGE)
     set(ENABLE_COVERAGE ON CACHE BOOL "Enable coverage build." FORCE)
     list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
     find_package(codecov)
-    add_coverage(${PROJECT_NAME})
     add_coverage(tests)
     add_coverage(Cli)
     add_coverage(main)

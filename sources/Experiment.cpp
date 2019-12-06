@@ -9,7 +9,7 @@
 
 using BufferType = ExperimentInitData::BufferType;
 
-Experiment Experiment::doExperiment(size_t bufferSize, 
+Experiment Experiment::doExperiment(size_t bufferSize,
                    Investigation::Direction direction)
 {
     std::cout << "Experiment. Size (KiB): " << bufferSize
@@ -72,7 +72,7 @@ void Experiment::runRandom(const Experiment::BufferPtr &buffer,
     return run(buffer, indexes);
 }
 
-void Experiment::run(const BufferPtr &buffer, 
+void Experiment::run(const BufferPtr &buffer,
           const std::vector<size_t> &indexes)
 {
     size_t value = 0;
@@ -107,10 +107,10 @@ size_t Experiment::sizeToKib(size_t size)
     return size * sizeof(size_t) / 1024;
 }
 
-Investigation Investigation::doInvestigation(Direction direction, 
+Investigation Investigation::doInvestigation(Direction direction,
                                    const BufferType &bufferSizes)
 {
-    std::cout << "Investigation. Direction: " << 
+    std::cout << "Investigation. Direction: " <<
     Cli::directionToString(direction) << std::endl;
 
     std::vector<Experiment> experiments;

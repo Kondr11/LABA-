@@ -34,10 +34,10 @@ int main()
             },
     };
 
-    std::cout << "\n\n\nYAML Report:\n" << 
+    std::cout << "\n\n\nYAML Report:\n" <<
          Cli::experimentDataToYamlString(result) << std::endl;
 
-    std::cout << "\n\n\nHTML Report:\n" << 
+    std::cout << "\n\n\nHTML Report:\n" <<
          Cli::experimentDataToHtmlString(result) << std::endl;
 
     return 0;
