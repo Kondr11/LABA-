@@ -11,23 +11,26 @@ set(
         CACHE STRING "Default cache server"
 )
 
-#include("tools/gate/cmake/HunterGate.cmake")
+include("tools/gate/cmake/HunterGate.cmake")
 
-#HunterGate(
- #       URL "https://github.com/ruslo/hunter/archive/v0.23.214.tar.gz"
- #       SHA1 "e14bc153a7f16d6a5eeec845fb0283c8fad8c358"
-#)
+HunterGate(
+       URL "https://github.com/ruslo/hunter/archive/v0.23.214.tar.gz"
+       SHA1 "e14bc153a7f16d6a5eeec845fb0283c8fad8c358"
+)
 
-project(lab-02-cache)
+project(lab2)
 string(APPEND CMAKE_CXX_FLAGS " -pedantic -Werror -Wall -Wextra")
 string(APPEND CMAKE_CXX_FLAGS " -Wno-unused-command-line-argument")
 string(APPEND CMAKE_CXX_FLAGS " -Wshadow -Wnon-virtual-dtor")
+
+hunter_add_package(GTest)
+find_package(GTest CONFIG REQUIRED)
 
 add_executable(
         ${PROJECT_NAME}
         ${CMAKE_CURRENT_SOURCE_DIR}/sources/Cli.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/sources/Experiment.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/sources/main.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/sources/Experiment.cpp
 )
 
 target_include_directories(
@@ -44,6 +47,9 @@ if (BUILD_COVERAGE)
     find_package(codecov)
     add_coverage(${PROJECT_NAME})
     add_coverage(tests)
+    add_coverage(Cli)
+    add_coverage(Experiment)
+    add_coverage(Experiment)
     list(APPEND LCOV_REMOVE_PATTERNS "'${PROJECT_SOURCE_DIR}/tests/*'")
     coverage_evaluate()
 endif ()
