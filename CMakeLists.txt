@@ -39,7 +39,7 @@ add_executable(Cli
 )
 
 
-add_executable(test
+add_executable(tests
   ${CMAKE_CURRENT_SOURCE_DIR}/tests/test.cpp
 )
 
