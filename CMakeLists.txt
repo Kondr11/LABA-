@@ -26,11 +26,20 @@ string(APPEND CMAKE_CXX_FLAGS " -Wshadow -Wnon-virtual-dtor")
 hunter_add_package(GTest)
 find_package(GTest CONFIG REQUIRED)
 
-add_executable(
-        ${PROJECT_NAME}
+add_executable(main
+        ${CMAKE_CURRENT_SOURCE_DIR}/sources/main.cpp
+)
+
+add_executable(Cli
         ${CMAKE_CURRENT_SOURCE_DIR}/sources/Cli.cpp
+)
+
+add_executable(Experiment
         ${CMAKE_CURRENT_SOURCE_DIR}/sources/Experiment.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/sources/Experiment.cpp
+)
+
+add_executable(tests
+  ${CMAKE_CURRENT_SOURCE_DIR}/tests/test.cpp
 )
 
 target_include_directories(
@@ -49,7 +58,7 @@ if (BUILD_COVERAGE)
     add_coverage(tests)
     add_coverage(Cli)
     add_coverage(Experiment)
-    add_coverage(Experiment)
+    add_coverage(main)
     list(APPEND LCOV_REMOVE_PATTERNS "'${PROJECT_SOURCE_DIR}/tests/*'")
     coverage_evaluate()
 endif ()
