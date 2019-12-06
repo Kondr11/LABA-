@@ -26,6 +26,10 @@ string(APPEND CMAKE_CXX_FLAGS " -Wshadow -Wnon-virtual-dtor")
 hunter_add_package(GTest)
 find_package(GTest CONFIG REQUIRED)
 
+add_library(header STATIC
+        ${CMAKE_CURRENT_SOURCE_DIR}/sources/Experiment.cpp
+)
+
 add_executable(main
         ${CMAKE_CURRENT_SOURCE_DIR}/sources/main.cpp
 )
@@ -34,18 +38,24 @@ add_executable(Cli
         ${CMAKE_CURRENT_SOURCE_DIR}/sources/Cli.cpp
 )
 
-add_executable(Experiment
-        ${CMAKE_CURRENT_SOURCE_DIR}/sources/Experiment.cpp
-)
 
 add_executable(tests
   ${CMAKE_CURRENT_SOURCE_DIR}/tests/test.cpp
 )
 
-target_include_directories(test
+target_include_directories(header
         ${PROJECT_NAME}
         PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
+
+target_include_directories(tests 
+  PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+
+
+target_link_libraries(tests header GTest::main)
+target_link_libraries(main header)
+target_link_libraries(Cli header)
 
 enable_testing()
 add_test(NAME unit_tests COMMAND tests)
@@ -57,7 +67,6 @@ if (BUILD_COVERAGE)
     add_coverage(${PROJECT_NAME})
     add_coverage(tests)
     add_coverage(Cli)
-    add_coverage(Experiment)
     add_coverage(main)
     list(APPEND LCOV_REMOVE_PATTERNS "'${PROJECT_SOURCE_DIR}/tests/*'")
     coverage_evaluate()
